@@ -20,6 +20,7 @@ TEXTS = {
         "filters_help": "Refine a visão do dashboard usando os campos abaixo.",
         "all_option": "Todos",
         "contract": "Contrato",
+        "gender": "Gênero",
         "internet_service": "Serviço de Internet",
         "payment_method": "Método de Pagamento",
         "load_error": "Não foi possível carregar a base de dados",
@@ -64,6 +65,7 @@ TEXTS = {
         "filters_help": "Refine the dashboard view using the fields below.",
         "all_option": "All",
         "contract": "Contract",
+        "gender": "Gender",
         "internet_service": "Internet Service",
         "payment_method": "Payment Method",
         "load_error": "Unable to load the dataset",
@@ -440,10 +442,12 @@ def apply_filters(df: pd.DataFrame, texts: dict[str, str]) -> pd.DataFrame:
     )
 
     contract_options = [texts["all_option"], *sorted(df["Contract"].dropna().unique())]
+    gender_options = [texts["all_option"], *sorted(df["gender"].dropna().unique())]
     internet_options = [texts["all_option"], *sorted(df["InternetService"].dropna().unique())]
     payment_options = [texts["all_option"], *sorted(df["PaymentMethod"].dropna().unique())]
 
     selected_contract = st.sidebar.selectbox(texts["contract"], options=contract_options)
+    selected_gender = st.sidebar.selectbox(texts["gender"], options=gender_options)
     selected_internet = st.sidebar.selectbox(
         texts["internet_service"], options=internet_options
     )
@@ -455,6 +459,9 @@ def apply_filters(df: pd.DataFrame, texts: dict[str, str]) -> pd.DataFrame:
 
     if selected_contract != texts["all_option"]:
         filtered = filtered[filtered["Contract"] == selected_contract]
+
+    if selected_gender != texts["all_option"]:
+        filtered = filtered[filtered["gender"] == selected_gender]
 
     if selected_internet != texts["all_option"]:
         filtered = filtered[filtered["InternetService"] == selected_internet]
