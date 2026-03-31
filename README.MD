@@ -34,6 +34,11 @@ O projeto foi estruturado para responder perguntas como:
 
 O arquivo local é a fonte principal das análises e do dashboard. O fallback remoto ajuda a manter o projeto executável caso o CSV não esteja disponível localmente.
 
+## Deploy Online
+
+- Dashboard no Streamlit Cloud:
+  [Clique aqui](https://dataanalysis-ibmtelcocustomerchurn-4epdjhjmdhswmotxwqwoi7.streamlit.app)
+
 ## Estrutura do Repositório
 
 - `app.py`: dashboard em Streamlit para análise interativa de churn
@@ -125,6 +130,11 @@ The project is structured to answer questions such as:
   `https://raw.githubusercontent.com/blastchar/telco-customer-churn/master/WA_Fn-UseC_-Telco-Customer-Churn.csv`
 
 The local file is the main source for both the analysis and the dashboard. The remote fallback helps keep the project runnable if the CSV is not available locally.
+
+## Live Demo
+
+- Streamlit Cloud dashboard:
+  [Click here](https://dataanalysis-ibmtelcocustomerchurn-4epdjhjmdhswmotxwqwoi7.streamlit.app)
 
 ## Repository Structure
 
