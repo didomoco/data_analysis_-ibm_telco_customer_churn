@@ -21,6 +21,7 @@ TEXTS = {
         "all_option": "Todos",
         "contract": "Contrato",
         "gender": "Gênero",
+        "tenure_period": "Tempo de permanência (meses)",
         "internet_service": "Serviço de Internet",
         "payment_method": "Método de Pagamento",
         "load_error": "Não foi possível carregar a base de dados",
@@ -66,6 +67,7 @@ TEXTS = {
         "all_option": "All",
         "contract": "Contract",
         "gender": "Gender",
+        "tenure_period": "Customer tenure (months)",
         "internet_service": "Internet Service",
         "payment_method": "Payment Method",
         "load_error": "Unable to load the dataset",
@@ -445,9 +447,17 @@ def apply_filters(df: pd.DataFrame, texts: dict[str, str]) -> pd.DataFrame:
     gender_options = [texts["all_option"], *sorted(df["gender"].dropna().unique())]
     internet_options = [texts["all_option"], *sorted(df["InternetService"].dropna().unique())]
     payment_options = [texts["all_option"], *sorted(df["PaymentMethod"].dropna().unique())]
+    min_tenure = int(df["tenure"].min())
+    max_tenure = int(df["tenure"].max())
 
     selected_contract = st.sidebar.selectbox(texts["contract"], options=contract_options)
     selected_gender = st.sidebar.selectbox(texts["gender"], options=gender_options)
+    selected_tenure = st.sidebar.slider(
+        texts["tenure_period"],
+        min_value=min_tenure,
+        max_value=max_tenure,
+        value=(min_tenure, max_tenure),
+    )
     selected_internet = st.sidebar.selectbox(
         texts["internet_service"], options=internet_options
     )
@@ -462,6 +472,10 @@ def apply_filters(df: pd.DataFrame, texts: dict[str, str]) -> pd.DataFrame:
 
     if selected_gender != texts["all_option"]:
         filtered = filtered[filtered["gender"] == selected_gender]
+
+    filtered = filtered[
+        (filtered["tenure"] >= selected_tenure[0]) & (filtered["tenure"] <= selected_tenure[1])
+    ]
 
     if selected_internet != texts["all_option"]:
         filtered = filtered[filtered["InternetService"] == selected_internet]
